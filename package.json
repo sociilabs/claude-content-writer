@@ -1,0 +1,29 @@
+{
+  "name": "claude-content-writer",
+  "version": "1.0.0",
+  "description": "A Claude Code skill for writing blog articles, LinkedIn posts, and email newsletters that sound human — not AI-generated.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "claude-skill",
+    "content-writing",
+    "blog",
+    "linkedin",
+    "newsletter",
+    "ai-writing",
+    "humanizer"
+  ],
+  "author": "Sociilabs",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "SKILL.md",
+    "references/",
+    "scripts/"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
