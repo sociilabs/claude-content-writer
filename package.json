@@ -1,7 +1,15 @@
 {
   "name": "claude-content-writer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Claude Code skill for writing blog articles, LinkedIn posts, and email newsletters that sound human — not AI-generated.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sociilabs/claude-content-writer"
+  },
+  "homepage": "https://github.com/sociilabs/claude-content-writer#readme",
+  "bugs": {
+    "url": "https://github.com/sociilabs/claude-content-writer/issues"
+  },
   "keywords": [
     "claude",
     "claude-code",
