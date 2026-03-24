@@ -1,6 +1,6 @@
 {
   "name": "claude-content-writer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Claude Code skill for writing blog articles, LinkedIn posts, and email newsletters that sound human — not AI-generated.",
   "keywords": [
     "claude",
@@ -19,6 +19,7 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "files": [
+    "README.md",
     "SKILL.md",
     "references/",
     "scripts/"
