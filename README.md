@@ -4,13 +4,13 @@
 
 **Generates content that sounds human — not AI-generated.**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/sociilabs/claude-content-writer)
+[![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)](https://github.com/sociilabs/claude-content-writer)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 <br>
 
 ```bash
-npx install-claude-skill sociilabs/claude-content-writer
+npx skills add sociilabs/claude-content-writer
 ```
 
 **Works with Claude Code, Cursor, Windsurf, and other Claude-based IDEs.**
@@ -54,7 +54,7 @@ Content creators, marketers, and founders who need to produce high-quality conte
 ## Getting Started
 
 ```bash
-npx install-claude-skill sociilabs/claude-content-writer
+npx skills add sociilabs/claude-content-writer
 ```
 
 Verify installation:
@@ -315,10 +315,10 @@ Both are installed automatically during setup.
 Run `/writer:profile-create` to create your profile first.
 
 **SEO check fails**
-Ensure claude-seo is installed: `npx install-claude-skill AgriciDaniel/claude-seo`
+Ensure claude-seo is installed: `npx skills add AgriciDaniel/claude-seo`
 
 **Anti-AI audit fails**
-Ensure humanizer is installed: `npx install-claude-skill blader/humanizer`
+Ensure humanizer is installed: `npx skills add blader/humanizer`
 
 **Content sounds generic**
 Update your profile with more voice samples and specific tone preferences.

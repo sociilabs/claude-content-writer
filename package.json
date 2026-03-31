@@ -42,5 +42,8 @@
   ],
   "engines": {
     "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "claude-content-writer": "^2.0.1"
   }
 }
