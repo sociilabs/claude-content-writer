@@ -5,42 +5,66 @@ const path = require('path');
 const os = require('os');
 const { execSync } = require('child_process');
 
-const SKILL_NAME = 'content-writer';
-const VERSION = '2.0.1';
+const VERSION = '2.1.0';
 const pkgDir = path.join(__dirname, '..');
-const targetDir = path.join(os.homedir(), '.claude', 'skills', SKILL_NAME);
-const refsDir = path.join(targetDir, 'references');
-const versionFile = path.join(targetDir, '.version');
+const skillsBaseDir = path.join(os.homedir(), '.claude', 'skills');
 
 // Check if this is a new install or update
 let isNewInstall = false;
 let isUpdate = false;
 let previousVersion = null;
 
-if (fs.existsSync(versionFile)) {
+// Version tracking for update command
+const updateVersionFile = path.join(skillsBaseDir, 'writer-update', '.version');
+if (fs.existsSync(updateVersionFile)) {
   try {
-    previousVersion = fs.readFileSync(versionFile, 'utf8').trim();
+    previousVersion = fs.readFileSync(updateVersionFile, 'utf8').trim();
     if (previousVersion !== VERSION) {
       isUpdate = true;
     }
   } catch (err) {
-    // Ignore errors reading version file
+    // Ignore
   }
 } else {
   isNewInstall = true;
 }
 
 try {
-  // Create target directories
-  fs.mkdirSync(refsDir, { recursive: true });
+  // Remove old monolithic skill if it exists
+  const oldSkillDir = path.join(skillsBaseDir, 'content-writer');
+  if (fs.existsSync(oldSkillDir)) {
+    fs.rmSync(oldSkillDir, { recursive: true, force: true });
+  }
 
-  // Copy SKILL.md
+  // Create individual skill directories for each command
+  const commands = [
+    'discuss', 'plan', 'execute', 'verify', 'ship', 'next',
+    'profile-create', 'profile-view', 'profile-edit', 'profile-delete',
+    'update', 'help', 'status'
+  ];
+
+  for (const cmd of commands) {
+    const skillDir = path.join(skillsBaseDir, `writer-${cmd}`);
+    fs.mkdirSync(skillDir, { recursive: true });
+    
+    // Copy skill file
+    fs.copyFileSync(
+      path.join(pkgDir, 'skills', 'writer', `${cmd}.md`),
+      path.join(skillDir, 'SKILL.md')
+    );
+  }
+
+  // Copy shared context to a common location
+  const sharedDir = path.join(skillsBaseDir, 'writer-shared');
+  fs.mkdirSync(sharedDir, { recursive: true });
   fs.copyFileSync(
-    path.join(pkgDir, 'SKILL.md'),
-    path.join(targetDir, 'SKILL.md')
+    path.join(pkgDir, 'skills', 'shared-context.md'),
+    path.join(sharedDir, 'shared-context.md')
   );
 
-  // Copy all reference files
+  // Copy references to writer-references
+  const refsDir = path.join(skillsBaseDir, 'writer-references');
+  fs.mkdirSync(refsDir, { recursive: true });
   const refFiles = fs.readdirSync(path.join(pkgDir, 'references'));
   for (const file of refFiles) {
     fs.copyFileSync(
@@ -49,16 +73,22 @@ try {
     );
   }
 
-  // Copy CHANGELOG.md
+  // Create writer-profiles directory
+  const profilesDir = path.join(skillsBaseDir, 'writer-profiles');
+  fs.mkdirSync(profilesDir, { recursive: true });
+
+  // Copy CHANGELOG to writer-update
+  const updateDir = path.join(skillsBaseDir, 'writer-update');
+  fs.mkdirSync(updateDir, { recursive: true });
   if (fs.existsSync(path.join(pkgDir, 'CHANGELOG.md'))) {
     fs.copyFileSync(
       path.join(pkgDir, 'CHANGELOG.md'),
-      path.join(targetDir, 'CHANGELOG.md')
+      path.join(updateDir, 'CHANGELOG.md')
     );
   }
 
   // Write version file
-  fs.writeFileSync(versionFile, VERSION);
+  fs.writeFileSync(updateVersionFile, VERSION);
 
   console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   
@@ -71,7 +101,7 @@ try {
   }
   
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-  console.log(`\nInstalled to: ${targetDir}`);
+  console.log(`\nInstalled ${commands.length} commands to: ${skillsBaseDir}`);
   
   // Install dependencies
   console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
@@ -82,46 +112,31 @@ try {
     const installScript = path.join(pkgDir, 'scripts', 'install-dependencies.sh');
     if (fs.existsSync(installScript)) {
       execSync(`bash "${installScript}"`, { stdio: 'inherit' });
-    } else {
-      console.log(`\n⚠ Dependency install script not found`);
-      console.log(`  Please install manually:`);
-      console.log(`  • claude-seo: https://github.com/AgriciDaniel/claude-seo`);
-      console.log(`  • humanizer: https://github.com/blader/humanizer\n`);
     }
   } catch (err) {
     console.warn(`\n⚠ Could not auto-install dependencies: ${err.message}`);
     console.log(`  Please install manually:`);
-    console.log(`  • claude-seo: https://github.com/AgriciDaniel/claude-seo`);
-    console.log(`  • humanizer: https://github.com/blader/humanizer\n`);
+    console.log(`  • claude-seo: npx skills add AgriciDaniel/claude-seo`);
+    console.log(`  • humanizer: npx skills add blader/humanizer\n`);
   }
 
-  // Display what's new for updates
+  // Display what's new
   if (isUpdate || isNewInstall) {
     console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`  What's New in v${VERSION}`);
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(``);
-    console.log(`  ✨ GSD-Style Phased Workflow`);
-    console.log(`     /writer:discuss → plan → execute → verify → ship`);
+    console.log(`  🎯 Command-Per-Skill Architecture`);
+    console.log(`     • Each command is now a separate skill`);
+    console.log(`     • Better command discovery in Claude Code`);
+    console.log(`     • Proper autocomplete support`);
     console.log(``);
-    console.log(`  🔍 Enhanced Profile Creation`);
-    console.log(`     • URL scanning with automatic tone detection`);
-    console.log(`     • Comprehensive brand questionnaire`);
-    console.log(`     • Interactive selection system`);
+    console.log(`  📦 Auto-Update Notifications`);
+    console.log(`     • Automatic version checking`);
+    console.log(`     • /writer:update command`);
+    console.log(`     • Changelog preview before updating`);
     console.log(``);
-    console.log(`  🚀 Integrated Skills`);
-    console.log(`     • claude-seo - SEO optimization`);
-    console.log(`     • humanizer - Anti-AI auditing`);
-    console.log(``);
-    console.log(`  📁 Smart Output Management`);
-    console.log(`     • Saves to current directory in Claude Code`);
-    console.log(`     • Organized structure for all content types`);
-    console.log(``);
-    console.log(`  🔒 Profile-First Enforcement`);
-    console.log(`     • Must create profile before generating content`);
-    console.log(`     • Ensures consistent quality and voice`);
-    console.log(``);
-    console.log(`  Full changelog: ${targetDir}/CHANGELOG.md`);
+    console.log(`  Full changelog: ${updateDir}/CHANGELOG.md`);
     console.log(``);
   }
 
@@ -132,22 +147,23 @@ try {
   console.log(``);
   
   if (isNewInstall || isUpdate) {
-    console.log(`  1. Create your writer profile:`);
+    console.log(`  1. Restart Claude Code to load new commands`);
+    console.log(``);
+    console.log(`  2. Create your writer profile:`);
     console.log(`     /writer:profile-create`);
     console.log(``);
-    console.log(`  2. Start generating content:`);
+    console.log(`  3. Start generating content:`);
     console.log(`     /writer:discuss "blog post about X"`);
     console.log(`     /writer:next  (auto-advance through phases)`);
     console.log(``);
   }
   
-  console.log(`  Documentation: ${targetDir}/README.md`);
-  console.log(`  Changelog: ${targetDir}/CHANGELOG.md`);
+  console.log(`  Available commands: /writer:help`);
   console.log(``);
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
   
 } catch (err) {
-  // Non-fatal — don't block npm install if something goes wrong
-  console.warn(`\n⚠ claude-content-writer: could not install skill files (${err.message})`);
-  console.warn(`  You can install manually by copying SKILL.md and references/ to ${targetDir}\n`);
+  console.error(`\n⚠ claude-content-writer: Installation failed: ${err.message}`);
+  console.error(`  Stack: ${err.stack}\n`);
+  process.exit(1);
 }

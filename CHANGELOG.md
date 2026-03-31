@@ -8,6 +8,35 @@ All notable changes to the Content Writer skill will be documented in this file.
 
 ---
 
+## [2.1.0] - 2026-04-01
+
+### Added
+
+**Command-Per-Skill Architecture**
+- Each command is now a separate skill file (like GSD)
+- Better command discovery in Claude Code
+- Proper autocomplete support for all commands
+- Individual skill folders: writer-discuss, writer-plan, writer-execute, etc.
+
+**Shared Context System**
+- Centralized shared-context.md for common content
+- Separate reference files for platform conventions
+- Organized skill structure for maintainability
+
+### Changed
+
+- Migrated from monolithic SKILL.md to command-per-file structure
+- Updated installation script to copy individual skill folders
+- Enhanced postinstall.js with better error handling
+- Improved command organization and discovery
+
+### Removed
+
+- Old monolithic content-writer skill directory
+- Single SKILL.md file (replaced with individual command files)
+
+---
+
 ## [2.0.1] - 2026-04-01
 
 ### Added

@@ -4,7 +4,7 @@
 
 **Generates content that sounds human — not AI-generated.**
 
-[![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)](https://github.com/sociilabs/claude-content-writer)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://github.com/sociilabs/claude-content-writer)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 <br>
