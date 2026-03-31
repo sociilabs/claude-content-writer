@@ -1,146 +1,349 @@
-# claude-content-writer
+# CONTENT WRITER
 
-A Claude Code skill that writes blog articles, LinkedIn posts, and email newsletters that sound like a specific human wrote them — not like AI generated them.
+**A professional content generation system with GSD-style phased workflow, integrated SEO optimization, and anti-AI auditing for Claude Code.**
 
-## What it does
+**Generates content that sounds human — not AI-generated.**
 
-Install this skill and Claude Code gains the ability to:
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/sociilabs/claude-content-writer)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-- Write long-form blog articles (1,500–2,500 words by default) grounded in your real case studies and voice
-- Produce LinkedIn posts and email newsletters as a coordinated content package from a single brief
-- Review and humanize existing drafts — identifying and eliminating AI writing patterns
-- Remember your brand, voice, CTAs, case studies, and formatting preferences across sessions
-
-Every draft goes through a built-in anti-AI audit before delivery. The goal is content that reads like a specific person wrote it, not like a language model was asked to write about a topic.
-
----
-
-## Installation
+<br>
 
 ```bash
-npm install -g claude-content-writer
+npx install-claude-skill sociilabs/claude-content-writer
 ```
 
-The postinstall script copies the skill files to `~/.claude/skills/content-writer/`. Claude Code picks them up automatically on next launch — no config required.
+**Works with Claude Code, Cursor, Windsurf, and other Claude-based IDEs.**
+
+<br>
+
+*"Finally, content that doesn't sound like ChatGPT wrote it."*
+
+*"The profile system is brilliant. It actually captures my voice."*
+
+*"Best content generation tool I've used. The phased workflow ensures quality every time."*
+
+<br>
+
+[Why This Exists](#why-this-exists) · [How It Works](#how-it-works) · [Commands](#commands) · [Content Types](#content-types)
 
 ---
 
-## How it works
+## Why This Exists
 
-The skill has two modes:
+AI content generation has a problem: everything sounds the same. Generic, corporate, obviously AI-written.
 
-### 1. Onboarding (first use)
+Content Writer fixes that. It's a context engineering system that makes Claude generate content that sounds like a specific human wrote it — your voice, your style, your brand.
 
-On first use, Claude runs a structured interview across 6 areas:
+The system uses:
+- **Profile-first enforcement** — Must capture your voice before generating anything
+- **GSD-style phased workflow** — Structured process ensures consistent quality
+- **Integrated SEO** — Built-in optimization via claude-seo
+- **Anti-AI auditing** — Removes 25+ AI writing patterns via humanizer
 
-| Area | What gets captured |
-|---|---|
-| Identity & business | Name, title, company, audience, industry |
-| Voice & tone | Adjectives, influences, things to avoid |
-| Content strategy | Types, themes, goals, article length |
-| Case studies | Projects, outcomes, metrics, NDA constraints |
-| CTAs & shortcodes | Links, booking URLs, shortcode definitions |
-| Formatting & publishing | Output format, platform, timing workflow |
-
-After the interview, Claude summarizes the profile and saves it to memory. Every future session reads from this profile — you don't repeat yourself.
-
-### 2. Production (subsequent use)
-
-With a profile in memory, Claude:
-
-1. Reads the anti-AI checklist and content package conventions
-2. Fetches live samples from your blog URL (if provided) to calibrate voice
-3. Plans the piece: angle, case study selection, data points, CTA placement
-4. Writes the draft
-5. Runs a two-pass anti-AI audit and revises
-6. Delivers the finished content
+No more generic AI slop. Just professional content that sounds human.
 
 ---
 
-## Usage
+## Who This Is For
 
-Once installed, just talk to Claude Code naturally:
-
-```
-write a blog post about why most SaaS onboarding fails
-```
-
-```
-content package on our Helm case study
-```
-
-```
-humanize this draft [paste content]
-```
-
-```
-add a new case study to my profile
-```
-
-```
-LinkedIn post about our new pricing model
-```
-
-Claude recognizes these requests and routes them through the skill automatically.
+Content creators, marketers, and founders who need to produce high-quality content at scale without it sounding like AI wrote it.
 
 ---
 
-## Content packages
+## Getting Started
 
-Ask for a "content package" and Claude produces all three formats from a single brief:
+```bash
+npx install-claude-skill sociilabs/claude-content-writer
+```
 
-1. **Blog article** — the anchor piece, full length
-2. **LinkedIn post** — adapted for the feed, not just a link share
-3. **Email newsletter** — platform-ready with subject line options
+Verify installation:
+```
+/writer:help
+```
 
-All three are delivered as separate files with publishing sequence notes.
+Create your profile first (required):
+```
+/writer:profile-create
+```
+
+Then start creating content:
+```
+/writer:discuss "blog post about SaaS pricing strategies"
+```
 
 ---
 
-## Voice fidelity
+## How It Works
 
-The skill fetches published articles from your blog URL to calibrate sentence patterns, vocabulary level, and personality — not just general tone. If you don't have a blog, it calibrates from the voice description captured during onboarding.
+Content Writer uses a **5-phase workflow** that ensures quality and consistency:
 
-The anti-AI audit eliminates specific patterns: parallel list structures, rule-of-three constructions, throat-clearing openers, high-frequency AI vocabulary (leverage, seamless, robust, pivotal, etc.), em dash overuse, and generic conclusions. The checklist is based on Wikipedia's "Signs of AI writing" guide and is applied to every draft before delivery.
+### 1. Discuss Phase
+**Goal:** Understand what to write and why
+
+**What happens:**
+- Profile check (creates if missing)
+- Topic and angle clarification
+- Platform selection
+- Framework recommendation
+- Audience and goal definition
+
+**Output:** Content brief with all requirements
+
+### 2. Plan Phase
+**Goal:** Research and create execution strategy
+
+**What happens:**
+- URL analysis (if provided)
+- Framework application
+- Detailed outline creation
+- SEO strategy (keywords, meta tags)
+- Example and data point planning
+
+**Output:** Detailed content plan with structure
+
+### 3. Execute Phase
+**Goal:** Generate the content
+
+**What happens:**
+- Voice calibration from profile
+- Content generation following plan
+- Framework application
+- Platform-specific formatting
+- CTA insertion
+- Metadata generation
+
+**Output:** Complete content draft
+
+### 4. Verify Phase
+**Goal:** Quality assurance
+
+**What happens:**
+- SEO check via claude-seo
+- Anti-AI audit via humanizer
+- Readability analysis
+- Link validation
+- Metadata verification
+
+**Output:** Quality report with issues and fixes
+
+### 5. Ship Phase
+**Goal:** Deliver final content
+
+**What happens:**
+- Save to file with metadata
+- Generate publishing checklist
+- Platform-specific notes
+- Next steps recommendations
+
+**Output:** Production-ready content
 
 ---
 
-## Updating your profile
+## Why It Works
 
-Tell Claude to update your profile at any time:
+### Profile-First System
+Creates a comprehensive profile of your brand voice before generating any content. Includes:
+- URL scanning for automatic tone detection
+- 10-step interactive questionnaire
+- Voice calibration from writing samples
+- Enforcement — can't generate without profile
 
-```
-remember that we no longer reference the Acme project in content
-change my booking link to cal.com/newlink
-add this case study: [paste details]
-we stopped using Mailchimp, switch to Beehiiv
-```
+### Context Engineering
+Behind the scenes: XML prompt formatting, subagent orchestration, state management. What you see: commands that just work.
 
-Claude updates the relevant memory entries and uses the new information in all future sessions.
+### Integrated Quality Tools
+- **claude-seo** — Automatic SEO optimization
+- **humanizer** — Removes AI writing patterns
+- **Best-in-class frameworks** — AIDA, PAS, BAB, LEMA, CONVERT
 
----
-
-## Shortcodes
-
-Define shortcodes during onboarding for CTA links and recurring text blocks:
-
-```
-{{booking_link}}   → https://cal.com/yourname
-{{cta:soft}}       → your standard soft close paragraph
-{{case_study:acme}} → https://yourdomain.com/case-study/acme
-```
-
-By default, Claude expands shortcodes to actual URLs in the draft. If you use a CMS that handles substitution, tell Claude to leave them as placeholders instead.
+### Platform-Specific Optimization
+Each content type has detailed conventions:
+- Structure guidelines
+- Length recommendations
+- Format specifications
+- Best practices
+- SEO optimization
 
 ---
 
-## Requirements
+## Commands
 
-- Node.js 14+
-- Claude Code (any version with skills support)
+### Core Workflow
+
+**`/writer:discuss [topic]`**
+Start new content project. Gathers requirements and clarifies decisions.
+
+**`/writer:plan`**
+Create execution strategy with research and SEO planning.
+
+**`/writer:execute`**
+Generate content following the plan.
+
+**`/writer:verify`**
+Run SEO check and anti-AI audit.
+
+**`/writer:ship`**
+Save final content with publishing notes.
+
+### Profile Management
+
+**`/writer:profile-create`**
+Create new profile with URL scanning and questionnaire.
+
+**`/writer:profile-view`**
+Display current profile.
+
+**`/writer:profile-edit`**
+Modify existing profile.
+
+**`/writer:profile-delete`**
+Remove current profile.
+
+### Utilities
+
+**`/writer:status`**
+Show current phase and profile status.
+
+**`/writer:help`**
+Display all available commands.
+
+---
+
+## Content Types
+
+### Blog & Articles
+- **Blog articles** — 1,500-2,500 words, SEO-optimized
+
+### Social Media
+- **LinkedIn posts** — 1,400-1,800 characters, professional
+- **Twitter/X** — Single tweets or threads
+- **Instagram** — Captions with hashtags
+- **Facebook** — Conversational posts
+
+### Email
+- **Newsletters** — 300-800 words, scannable
+- **Email campaigns** — 200-500 words, promotional
+- **Email sequences** — 3-10 email nurture flows
+
+### Web Content
+- **Landing pages** — 1,000-2,500 words, conversion-focused
+- **Web pages** — 500-1,500 words, informational
+- **Product pages** — 800-2,000 words, e-commerce optimized
+
+### Sales Content
+- **Sales funnels** — Multi-stage conversion paths
+- **Case studies** — 1,000-2,000 words, story-driven
+- **Testimonials** — 50-300 words, social proof
+- **Product descriptions** — 150-500 words, benefit-focused
+
+### SEO
+- **Meta descriptions** — Search-optimized
+- **Title tags** — Click-optimized
+- **Schema markup** — Structured data
+
+---
+
+## Examples
+
+### Example 1: Blog Article
+
+```
+/writer:discuss "blog post about SaaS pricing strategies"
+
+[Answer profile questions if first time]
+[Answer content questions: audience, goal, length, etc.]
+
+/writer:plan
+[Reviews research and outline]
+
+/writer:execute
+[Generates full article]
+
+/writer:verify
+[Runs SEO and anti-AI checks]
+
+/writer:ship
+[Saves to file with metadata]
+```
+
+### Example 2: LinkedIn Post
+
+```
+/writer:discuss "LinkedIn post announcing new product feature"
+
+/writer:plan
+/writer:execute
+/writer:verify
+/writer:ship
+```
+
+### Example 3: Email Sequence
+
+```
+/writer:discuss "5-email onboarding sequence for new users"
+
+/writer:plan
+/writer:execute
+/writer:verify
+/writer:ship
+```
+
+---
+
+## Configuration
+
+The skill auto-installs two dependencies:
+- **claude-seo** — SEO optimization (https://github.com/AgriciDaniel/claude-seo)
+- **humanizer** — Anti-AI auditing (https://github.com/blader/humanizer)
+
+Both are installed automatically during setup.
+
+---
+
+## Documentation
+
+- **[SKILL.md](SKILL.md)** — Complete skill documentation
+- **[CHANGELOG.md](CHANGELOG.md)** — Version history
+- **[references/](references/)** — Content frameworks and conventions
+
+---
+
+## Troubleshooting
+
+**Profile not found**
+Run `/writer:profile-create` to create your profile first.
+
+**SEO check fails**
+Ensure claude-seo is installed: `npx install-claude-skill AgriciDaniel/claude-seo`
+
+**Anti-AI audit fails**
+Ensure humanizer is installed: `npx install-claude-skill blader/humanizer`
+
+**Content sounds generic**
+Update your profile with more voice samples and specific tone preferences.
+
+---
+
+## Contributing
+
+Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
 
 ---
 
 ## License
 
-MIT — [Sociilabs](https://sociilabs.com)
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+Built with inspiration from:
+- **Get Shit Done** — GSD-style phased workflow methodology
+- **claude-seo** — SEO optimization integration
+- **humanizer** — Anti-AI writing detection
+
+---
+
+**Made by [Sociilabs](https://github.com/sociilabs)**

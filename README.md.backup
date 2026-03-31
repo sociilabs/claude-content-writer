@@ -1,0 +1,243 @@
+# claude-content-writer
+
+A comprehensive Claude Code skill that writes blog articles, social media posts (LinkedIn, Facebook, Twitter, Instagram), email newsletters, and SEO metadata that sound like a specific human wrote them — not like AI generated them.
+
+## What it does
+
+Install this skill and Claude Code gains the ability to:
+
+- **Write content for any platform:** Blog articles, LinkedIn posts, Facebook posts, Instagram captions, tweets, Twitter threads, and email newsletters
+- **Generate SEO metadata:** Complete meta tags, Open Graph tags, Twitter Cards, and schema markup
+- **Research before writing:** Analyze URLs, gather insights, and create research briefs
+- **Manage your content profile:** Store and update writer profiles, products/services, CTAs, and case studies
+- **Create content packages:** Produce coordinated multi-platform content from a single brief
+- **Review and humanize drafts:** Identify and eliminate AI writing patterns
+- **Remember everything:** Brand, voice, CTAs, case studies, and preferences across sessions
+
+Every draft goes through a built-in anti-AI audit before delivery. The goal is content that reads like a specific person wrote it, not like a language model was asked to write about a topic.
+
+---
+
+## Installation
+
+```bash
+npm install -g claude-content-writer
+```
+
+The postinstall script copies the skill files to `~/.claude/skills/content-writer/`. Claude Code picks them up automatically on next launch — no config required.
+
+---
+
+## How it works
+
+The skill has three modes:
+
+### 1. Onboarding (first use)
+
+On first use, Claude runs a structured interview across 6 areas:
+
+| Area | What gets captured |
+|---|---|
+| Identity & business | Name, title, company, audience, industry |
+| Voice & tone | Adjectives, influences, things to avoid |
+| Content strategy | Types, themes, goals, article length |
+| Case studies | Projects, outcomes, metrics, NDA constraints |
+| CTAs & shortcodes | Links, booking URLs, shortcode definitions |
+| Formatting & publishing | Output format, platform, timing workflow |
+
+After the interview, Claude summarizes the profile and saves it to memory. Every future session reads from this profile — you don't repeat yourself.
+
+### 2. Production (content creation)
+
+With a profile in memory, Claude:
+
+1. Determines content type (blog, social post, SEO metadata, etc.)
+2. Reads platform-specific conventions and anti-AI checklist
+3. Loads your profile, products, CTAs, and case studies from memory
+4. Fetches live samples from your blog URL (if provided) to calibrate voice
+5. Researches the topic (if URL provided or requested)
+6. Plans the piece: angle, case study selection, data points, CTA placement
+7. Writes the draft following platform conventions
+8. Runs a two-pass anti-AI audit and revises
+9. Delivers the finished content with publishing notes
+
+### 3. Management (profile & assets)
+
+Manage your content infrastructure:
+
+- **Profile management:** Create, view, edit, or delete your writer profile
+- **Product/service management:** Add, view, edit, or delete products/services to reference in content
+- **CTA management:** Add, view, edit, or delete call-to-action templates for different platforms
+- **Case study management:** Add, view, edit, or delete case studies with rotation tracking
+
+---
+
+## Usage
+
+Once installed, just talk to Claude Code naturally:
+
+**Content creation:**
+```
+write a blog post about why most SaaS onboarding fails
+create a Twitter thread about MVP validation
+write an Instagram caption for this product launch
+generate SEO metadata for my latest article
+create a Facebook post about our case study
+LinkedIn post about our new pricing model
+content package on our Helm case study (creates blog + social + newsletter)
+```
+
+**Research:**
+```
+research this topic before writing: [URL or topic]
+analyze this article and create content from it: [URL]
+```
+
+**Profile management:**
+```
+create my writer profile
+view my profile
+edit my voice description
+add a new product to my profile
+add a CTA for LinkedIn
+add this case study: [details]
+view all my case studies
+```
+
+**Review and humanize:**
+```
+humanize this draft [paste content]
+review this for AI tells [paste content]
+```
+
+Claude recognizes these requests and routes them through the skill automatically.
+
+---
+
+## Slash Commands
+
+For explicit command access, use slash commands:
+
+**Content creation:**
+- `/write-blog` - Create a blog article
+- `/write-linkedin` - Create a LinkedIn post
+- `/write-facebook` - Create a Facebook post
+- `/write-instagram` - Create an Instagram caption
+- `/write-tweet` - Create a single tweet
+- `/write-thread` - Create a Twitter thread
+- `/write-seo-meta` - Create SEO and social metadata
+- `/write-package` - Create a complete content package
+- `/research-content` - Research a topic before writing
+
+**Profile management:**
+- `/profile-create` - Create a new writer profile
+- `/profile-view` - View current profile
+- `/profile-edit` - Edit profile
+- `/profile-delete` - Delete profile
+
+**Asset management:**
+- `/products-add`, `/products-view`, `/products-edit`, `/products-delete`
+- `/ctas-add`, `/ctas-view`, `/ctas-edit`, `/ctas-delete`
+- `/cases-add`, `/cases-view`, `/cases-edit`, `/cases-delete`
+
+---
+
+## Content packages
+
+Ask for a "content package" and Claude produces multiple formats from a single brief:
+
+**Standard package (blog + LinkedIn + newsletter):**
+1. **Blog article** — the anchor piece, full length
+2. **LinkedIn post** — adapted for the feed, not just a link share
+3. **Email newsletter** — platform-ready with subject line options
+
+**Full social package (all platforms):**
+1. Blog article
+2. LinkedIn post
+3. Facebook post
+4. Instagram caption
+5. Twitter thread
+6. SEO metadata
+7. Email newsletter
+
+**Custom packages:**
+Specify which platforms you want, and Claude creates content for each with consistent messaging adapted to each platform's conventions.
+
+All pieces are delivered as separate files with publishing sequence notes and platform-specific recommendations.
+
+---
+
+## Platform-specific conventions
+
+Each platform has unique conventions and best practices:
+
+- **Blog articles:** 1,500-2,500 words, H2 structure, embedded CTAs, SEO optimization
+- **LinkedIn:** 1,400-1,800 characters, bold headers, link in first comment
+- **Facebook:** 100-250 characters for reach, link in first comment, conversational tone
+- **Instagram:** 125-150 chars (short) or 1,000-2,200 chars (story), 3-5 hashtags, "link in bio"
+- **Twitter:** 240-280 characters (tweets), 5-12 tweets (threads), no external links in body
+- **SEO metadata:** Title tags (50-60 chars), meta descriptions (150-160 chars), OG tags, schema markup
+
+Claude automatically adapts your voice and message to each platform's conventions.
+
+---
+
+## Voice fidelity
+
+The skill fetches published articles from your blog URL to calibrate sentence patterns, vocabulary level, and personality — not just general tone. If you don't have a blog, it calibrates from the voice description captured during onboarding.
+
+The anti-AI audit eliminates specific patterns: parallel list structures, rule-of-three constructions, throat-clearing openers, high-frequency AI vocabulary (leverage, seamless, robust, pivotal, etc.), em dash overuse, and generic conclusions. The checklist is based on Wikipedia's "Signs of AI writing" guide and is applied to every draft before delivery.
+
+---
+
+## Research workflow
+
+Before writing, Claude can research your topic:
+
+1. **From URLs:** Provide a URL and Claude analyzes it, extracts insights, and creates content inspired by (not copied from) the source
+2. **From topics:** Ask Claude to research a topic and it will search for sources, extract insights, and organize findings
+3. **Research briefs:** Claude creates structured research briefs with key insights, contrarian angles, and proof points
+
+Research ensures your content is grounded in data, includes specific examples, and offers unique perspectives.
+
+---
+
+## Updating your profile
+
+Tell Claude to update your profile at any time:
+
+```
+remember that we no longer reference the Acme project in content
+change my booking link to cal.com/newlink
+add this case study: [paste details]
+we stopped using Mailchimp, switch to Beehiiv
+```
+
+Claude updates the relevant memory entries and uses the new information in all future sessions.
+
+---
+
+## Shortcodes
+
+Define shortcodes during onboarding for CTA links and recurring text blocks:
+
+```
+{{booking_link}}   → https://cal.com/yourname
+{{cta:soft}}       → your standard soft close paragraph
+{{case_study:acme}} → https://yourdomain.com/case-study/acme
+```
+
+By default, Claude expands shortcodes to actual URLs in the draft. If you use a CMS that handles substitution, tell Claude to leave them as placeholders instead.
+
+---
+
+## Requirements
+
+- Node.js 14+
+- Claude Code (any version with skills support)
+
+---
+
+## License
+
+MIT — [Sociilabs](https://sociilabs.com)

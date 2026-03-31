@@ -1,0 +1,551 @@
+---
+name: content-writer
+description: |
+  Write blog articles, social media posts (LinkedIn, Facebook, Twitter, Instagram),
+  email newsletters, SEO metadata, and complete content packages for any business
+  or personal brand. Manage writer profiles, products/services, CTAs, and case studies.
+  Conduct research before writing. Use this skill whenever asked to write content for
+  any platform, create social posts, generate SEO metadata, manage content profiles,
+  or research topics. Content sounds human, matches your specific voice, and avoids
+  AI-writing patterns. On first use, runs an onboarding interview to learn your brand,
+  voice, industry, and preferences, then stores everything in memory. Triggers on:
+  "write a blog post," "create a tweet," "LinkedIn post," "Instagram caption,"
+  "Facebook post," "Twitter thread," "SEO metadata," "content package," "research
+  this topic," "manage my profile," "add a product," "add a CTA," or any request
+  to produce marketing or thought-leadership content.
+---
+
+# Content Writer
+
+Write blog articles, social media posts (LinkedIn, Facebook, Twitter, Instagram), email newsletters, and SEO metadata that sound like a specific human wrote them — not like AI generated them. Manage writer profiles, products/services, CTAs, and case studies. Conduct research before creating content. Works for any industry, any brand voice, any content strategy, any platform.
+
+---
+
+## How this skill works
+
+This skill has three modes:
+
+1. **Onboarding mode** — First time or when profile is incomplete. Runs an interview to learn who the user is, how they write, what they sell, and what their content goals are. Stores everything in memory.
+2. **Production mode** — Profile exists in memory. Reads it, fetches voice samples if a blog URL is available, and writes content for any platform.
+3. **Management mode** — Manage writer profiles, products/services, CTAs, and case studies stored in memory.
+
+On every use, check memory first. If a writer profile exists, go straight to production or management. If not, run onboarding.
+
+---
+
+## Available Commands
+
+This skill provides slash commands for different content types and management functions:
+
+### Content Creation Commands
+- `/write-blog` - Create a blog article
+- `/write-linkedin` - Create a LinkedIn post
+- `/write-facebook` - Create a Facebook post
+- `/write-instagram` - Create an Instagram caption
+- `/write-tweet` - Create a single tweet
+- `/write-thread` - Create a Twitter thread
+- `/write-seo-meta` - Create SEO and social metadata
+- `/write-package` - Create a complete content package (blog + social + newsletter)
+- `/research-content` - Research a topic before writing
+
+### Profile Management Commands
+- `/profile-create` - Create a new writer profile (runs onboarding)
+- `/profile-edit` - Edit existing writer profile
+- `/profile-view` - View current writer profile
+- `/profile-delete` - Delete writer profile
+
+### Product/Service Management Commands
+- `/products-add` - Add a product or service
+- `/products-edit` - Edit existing product/service
+- `/products-view` - View all products/services
+- `/products-delete` - Delete a product/service
+
+### CTA Management Commands
+- `/ctas-add` - Add a call-to-action template
+- `/ctas-edit` - Edit existing CTA
+- `/ctas-view` - View all CTAs
+- `/ctas-delete` - Delete a CTA
+
+### Case Study Management Commands
+- `/cases-add` - Add a case study
+- `/cases-edit` - Edit existing case study
+- `/cases-view` - View all case studies
+- `/cases-delete` - Delete a case study
+
+---
+
+## Onboarding interview
+
+When no writer profile exists in memory (or the user asks to set one up), run this interview. The goal is to gather everything needed to write content that sounds like the user, not like Claude.
+
+Use the `memory_user_edits` tool to store each section of the profile as the user confirms it. Do not wait until the end — save incrementally so nothing is lost.
+
+### The interview has 6 sections. Gather them conversationally — not as a rigid form.
+
+**Section 1: Identity and business**
+
+Ask the user:
+- What is your name and title? (This is the byline on all content.)
+- What is your company/brand name?
+- What does your company do? (1-2 sentence description, in the user's words.)
+- Who is your target audience? (Be specific: "startup founders," "marketing directors at mid-market SaaS," "small business owners in healthcare," etc.)
+- What industry or niche are you in?
+
+**Section 2: Voice and tone**
+
+Ask the user to describe how they want to sound. Provide these prompts to help:
+- If you were explaining your work at a dinner party, how would you talk? (Casual? Technical? Storytelling?)
+- Pick 3-5 adjectives that describe your ideal writing voice. (Examples: direct, warm, irreverent, data-driven, conversational, provocative, authoritative, humble, witty.)
+- Are there voices or writers you admire? (Blogs, newsletters, authors — helps calibrate.)
+- Anything you specifically want to avoid? (Corporate jargon? Emojis? Exclamation marks? Overly casual?)
+
+**Section 3: Content strategy**
+
+Ask the user:
+- What types of content do you want to produce? (Blog articles, LinkedIn posts, newsletters, all three as packages?)
+- What are your main content themes or pillars? (Topics you want to be known for.)
+- What is the goal of your content? (Lead generation, thought leadership, SEO, community building, LLM/AI citation, brand awareness?)
+- Do you have a website or blog URL where existing content lives? (If yes, the skill will fetch samples for voice matching. If no, the skill will calibrate from the interview alone.)
+- Preferred article length? (Default: 1,500–2,500 words for blog. Let the user override.)
+
+**Section 4: Case studies and proof points**
+
+Ask the user:
+- Do you have client projects, case studies, or portfolio pieces you want referenced in content?
+- For each one, gather: project name (or anonymized label), what the client's problem was, what you did, specific metrics/outcomes, any testimonial quotes.
+- Are there NDA constraints? Which projects can be named, which must stay anonymous?
+- Are any case studies overused and should be rotated out?
+
+Tell the user: "You can provide as many or as few as you have. Even 2-3 good ones are enough. We can always add more later."
+
+If the user has a document with case studies (uploaded file, Google Doc, etc.), read it and extract the details rather than making them type it all out.
+
+**Section 5: CTAs, URLs, and shortcodes**
+
+Ask the user:
+- What are your standard call-to-action links? Gather each one with a label and URL. Examples:
+  - Booking link: `https://cal.com/yourname`
+  - Email: `hello@yourdomain.com`
+  - Main website: `https://yourdomain.com`
+  - Case study pages: `https://yourdomain.com/case-study/project-name`
+  - Product page: `https://yourdomain.com/product`
+  - Free resource / lead magnet: `https://yourdomain.com/guide`
+- Do you want shortcodes for dynamic insertion? Shortcodes let the user drop placeholders into content that get replaced later (by their CMS, email tool, etc.). Examples:
+  - `{{booking_link}}` → expands to the booking URL
+  - `{{email}}` → expands to contact email
+  - `{{case_study:helm}}` → expands to a specific case study URL
+  - `{{cta:soft}}` → inserts the user's preferred soft CTA paragraph
+  - `{{cta:direct}}` → inserts the user's preferred direct CTA paragraph
+- How many CTAs do you typically want per article? (Default: 2-3 embedded naturally, plus a closing CTA section.)
+- Do you want a transparent "commercial intent" section at the end of articles? (Some brands are upfront about selling; others prefer a lighter touch.)
+
+Store the CTA map and shortcode definitions in memory. When writing content, replace shortcodes with the actual URLs/text, or leave them as shortcodes if the user prefers that for their CMS workflow.
+
+**Section 6: Formatting and publishing preferences**
+
+Ask the user:
+- How do you format articles? (Markdown? Word doc? HTML?)
+- Do you publish LinkedIn posts yourself or have a team?
+- Do you want publishing instructions and timing guidance included with LinkedIn posts?
+- Do you send newsletters? What platform? (Mailchimp, ConvertKit, Beehiiv, etc.)
+- Do you want subject line options included with newsletters?
+- Any other publishing workflow details? (e.g., "blog goes live first, then newsletter 2 hours later")
+
+### After the interview
+
+Summarize the complete profile back to the user for confirmation. Then save it to memory using `memory_user_edits` with the command `add`. Structure the memory entries as:
+
+```
+[Content Writer] Name: {name}, Title: {title}, Company: {company}
+[Content Writer] Business: {1-2 sentence description}
+[Content Writer] Audience: {target audience}
+[Content Writer] Industry: {industry/niche}
+[Content Writer] Voice: {3-5 adjectives}, avoids: {things to avoid}
+[Content Writer] Voice notes: {additional voice calibration details}
+[Content Writer] Content types: {blog, linkedin, newsletter, packages}
+[Content Writer] Content pillars: {themes}
+[Content Writer] Content goals: {goals}
+[Content Writer] Blog URL: {url or "none"}
+[Content Writer] Article length: {word count range}
+[Content Writer] Case study: {name} — {brief summary with key metrics}
+[Content Writer] Case study: {name} — {brief summary with key metrics}
+[Content Writer] Case study rotation: {which to prioritize, which to rest}
+[Content Writer] NDA notes: {any confidentiality constraints}
+[Content Writer] CTA: {label} — {url}
+[Content Writer] CTA: {label} — {url}
+[Content Writer] Shortcodes: {list of shortcode definitions}
+[Content Writer] CTA style: {transparent commercial section: yes/no, soft/direct preference}
+[Content Writer] Output format: {markdown/docx/html}
+[Content Writer] Publishing workflow: {sequence and timing}
+[Content Writer] LinkedIn prefs: {format preferences}
+[Content Writer] Newsletter prefs: {platform, subject lines yes/no}
+```
+
+Each memory entry should be concise (under 500 chars) and prefixed with `[Content Writer]` so they're identifiable. Split across multiple entries as needed.
+
+---
+
+## Production mode
+
+When the user asks for content and a writer profile exists in memory, follow this workflow:
+
+### Step 1: Determine content type
+
+Identify what the user is requesting:
+- Blog article
+- LinkedIn post
+- Facebook post
+- Instagram caption
+- Single tweet
+- Twitter thread
+- SEO metadata
+- Content package (multiple formats)
+- Research (before writing)
+
+### Step 2: Read appropriate references
+
+Read the relevant reference files based on content type:
+- **All content:** `references/anti-ai-checklist.md` — Apply to every draft
+- **Blog articles:** `references/content-packages.md` — Article structure
+- **LinkedIn:** `references/content-packages.md` — LinkedIn conventions
+- **Facebook:** `references/facebook-conventions.md` — Facebook post formats
+- **Instagram:** `references/instagram-conventions.md` — Caption guidelines
+- **Twitter:** `references/twitter-conventions.md` — Tweet and thread formats
+- **SEO metadata:** `references/seo-meta-conventions.md` — Meta tags and schema
+- **Research:** `references/research-workflow.md` — Research process
+- **Packages:** All relevant platform references
+
+### Step 3: Load profile and assets
+
+Retrieve from memory:
+- Writer profile (voice, audience, strategy)
+- Products/services (for natural mentions)
+- CTAs (for appropriate platform)
+- Case studies (check rotation status)
+- Shortcodes (for expansion or CMS integration)
+
+### Step 4: Fetch voice samples (if blog URL available)
+
+If the user's profile includes a blog URL, use `read_url_content` to fetch 1-2 actual article URLs to calibrate voice. Blog listing pages often return no usable content — always fetch specific article URLs.
+
+If no blog URL exists, calibrate from the voice description in memory alone.
+
+### Step 5: Research (if needed or requested)
+
+If the user provides a URL or asks to research:
+1. Use `read_url_content` to fetch the source
+2. Follow the research workflow from `references/research-workflow.md`
+3. Extract key insights, contrarian angles, and proof points
+4. Create a research brief (optional: save to `/mnt/user-data/research/`)
+
+If the user asks to research without a URL:
+1. Use `search_web` to find relevant sources
+2. Fetch 3-5 high-quality sources
+3. Extract insights and organize findings
+4. Create a research brief
+
+### Step 6: Plan the piece
+
+Before writing, establish:
+- **Topic and angle:** What is this about? What's the contrarian take or unique perspective?
+- **Platform voice:** How does this platform differ from others? (Twitter is punchier, LinkedIn is professional, etc.)
+- **Primary case study:** Which project to lead with? Check rotation notes in memory.
+- **Data points:** What specific numbers, metrics, or external data support the argument?
+- **CTA placement:** Which CTA(s) are appropriate for this platform?
+- **Product mentions:** Are any products/services naturally relevant?
+
+### Step 7: Write the draft
+
+Follow the platform-specific structure conventions from the appropriate reference file.
+
+**For blog articles:** Follow article structure conventions (see below)
+**For social posts:** Follow platform conventions from reference files
+**For SEO metadata:** Generate all required meta tags and schema markup
+**For content packages:** Create all requested formats (blog, social, newsletter, etc.)
+
+### Step 8: Run the anti-AI audit
+
+After drafting, run the full checklist from `references/anti-ai-checklist.md`. This is a two-pass process:
+1. Ask: "What makes this obviously AI-generated?" Identify remaining tells.
+2. Revise to eliminate every tell identified.
+
+The audit is not optional. It is the difference between content that reads like Claude and content that reads like a human.
+
+### Step 9: Deliver
+
+- Save to `/mnt/user-data/outputs/` as the user's preferred format
+- Use `present_files` to share with the user
+- If part of a content package, produce all pieces and present together
+- Include publishing notes, timing guidance, and platform-specific recommendations
+- Include CTA replacement reminders if using shortcodes
+
+---
+
+## Article structure conventions
+
+These are defaults. They can be overridden by the user's preferences stored in memory.
+
+### Title
+
+Specific and provocative. Include dollar amounts, percentages, timeframes, or named frameworks where possible. The practical benefit or implied fear should be in the title.
+
+Good patterns:
+- "The $X [Problem]: Why [Cause]"
+- "What is [Framework] (And Why Your [Audience] Probably Needs It)"
+- "[Decision A] or [Decision B]? [How to Choose]"
+- "[Number] [Things] That [Surprising Outcome]"
+
+### Opening (first 3 sentences)
+
+Create immediate tension or curiosity. Do not open with definitions, bare statistics, or throat-clearing.
+
+Acceptable openers:
+- A factual scene from a real case study
+- A verifiable metric that reframes a cost or risk
+- A recurring pattern described as a pattern ("We see this constantly...")
+- A real question the author gets asked regularly
+
+Never fabricate: no invented founder calls, no fictional anecdotes, no unnamed client stories with made-up details. If the user hasn't provided a specific story, open with a pattern or a metric instead.
+
+### Body
+
+Use H2 subheadings throughout. Each section should flow from the previous one — the article reads as a logical argument building to a conclusion, not a listicle.
+
+The first half builds the problem case. The second half provides the framework or solution.
+
+Within H2 sections, use **bold text** for callout labels (not more H-levels).
+
+### Data and specificity
+
+Always include specific numbers. Use real data from the user's case studies or verifiable external sources. When using illustrative numbers, frame them clearly: "Based on our tracking..." or "Across the projects we've worked on..."
+
+Replace vague language with specific framing:
+- "some teams" → "3 out of 5 teams we audited"
+- "many founders" → "roughly 80% of the founders who come to us"
+- "it can be expensive" → "$40K–$100K in migration costs"
+
+### CTAs
+
+Embed 2-3 contextual CTAs as natural sentences within the flow. They should feel like logical next steps, not sales interruptions. Use the URLs and shortcodes from the user's profile.
+
+If the user wants a transparent commercial section, close with something like: "Look, I wrote this partly because [topic] comes up every week, and partly because this is what we do at [Company]. Here's how to reach us if it's relevant."
+
+### Closing
+
+Do not summarize the article. Do not end with motivational fluff. End with a concrete CTA and a final punchy line that reframes the stakes.
+
+If the user's profile includes a bio line format, append it in italics.
+
+### SEO and GEO optimization
+
+- Phrase H2 headings as questions people search for
+- Include a TL;DR or structured summary section near the bottom (LLMs and AI Overviews favor extractable summaries)
+- Mention the company name naturally 3-5+ times with context
+- Use specific technical details and concrete numbers (LLMs weight these for E-E-A-T authority)
+- Include the primary keyword/topic in the first paragraph
+
+---
+
+## Content package workflow
+
+When asked for a "content package" or multiple formats, determine what the user wants:
+
+**Standard package (blog + LinkedIn + newsletter):**
+1. **Blog article** (the anchor piece)
+2. **LinkedIn post** (conventions in `references/content-packages.md`)
+3. **Email newsletter** (conventions in `references/content-packages.md`)
+
+**Custom package (user specifies platforms):**
+- Create content for each requested platform
+- Follow platform-specific conventions from reference files
+- Ensure consistent messaging across all formats
+- Adapt voice and length for each platform
+
+**Full social package (all platforms):**
+1. Blog article
+2. LinkedIn post
+3. Facebook post
+4. Instagram caption
+5. Twitter thread
+6. SEO metadata
+7. Email newsletter
+
+Deliver as separate files. Include publishing sequence notes and platform-specific recommendations.
+
+---
+
+## Management mode
+
+When the user asks to manage their profile, products, CTAs, or case studies, follow these workflows:
+
+### Profile management
+
+**Create profile (`/profile-create`):**
+1. Run the full onboarding interview (6 sections)
+2. Save each section to memory incrementally with `[Content Writer]` prefix
+3. Confirm complete profile with user
+4. Ready to generate content
+
+**View profile (`/profile-view`):**
+1. Retrieve all memory entries with `[Content Writer]` prefix
+2. Organize by section (Identity, Voice, Strategy, etc.)
+3. Display in readable format
+4. Highlight any missing sections
+
+**Edit profile (`/profile-edit`):**
+1. Ask what the user wants to change
+2. Retrieve relevant memory entries
+3. Show current values
+4. Prompt for new values
+5. Update memory entries
+6. Confirm changes
+
+**Delete profile (`/profile-delete`):**
+1. Show what will be deleted
+2. Require explicit confirmation
+3. Delete all `[Content Writer]` memory entries
+4. Confirm deletion
+
+### Product/service management
+
+**Add product (`/products-add`):**
+1. Prompt for: name, description, benefits, pricing, audience, use cases
+2. Validate completeness
+3. Save to memory with `[Content Writer Product]` prefix
+4. Confirm addition
+
+**View products (`/products-view`):**
+1. Retrieve all `[Content Writer Product]` memory entries
+2. Display in organized list format
+3. Show which products are relevant for different content types
+
+**Edit product (`/products-edit`):**
+1. List existing products
+2. User selects which to edit
+3. Show current values
+4. Prompt for new values
+5. Update memory entry
+6. Confirm changes
+
+**Delete product (`/products-delete`):**
+1. List existing products
+2. User selects which to delete
+3. Require confirmation
+4. Remove from memory
+5. Confirm deletion
+
+### CTA management
+
+**Add CTA (`/ctas-add`):**
+1. Prompt for: name, type, text, context, link
+2. Validate completeness
+3. Save to memory with `[Content Writer CTA]` prefix
+4. Confirm addition
+
+**View CTAs (`/ctas-view`):**
+1. Retrieve all `[Content Writer CTA]` memory entries
+2. Display organized by type and context
+3. Show which CTAs work for which platforms
+
+**Edit CTA (`/ctas-edit`):**
+1. List existing CTAs
+2. User selects which to edit
+3. Show current values
+4. Prompt for new values
+5. Update memory entry
+6. Confirm changes
+
+**Delete CTA (`/ctas-delete`):**
+1. List existing CTAs
+2. User selects which to delete
+3. Require confirmation
+4. Remove from memory
+5. Confirm deletion
+
+### Case study management
+
+**Add case study (`/cases-add`):**
+1. Prompt for: name, context, problem, approach, outcome, testimonial, NDA status
+2. Validate completeness
+3. Save to memory with `[Content Writer Case Study]` prefix
+4. Set rotation status to "Active"
+5. Confirm addition
+
+**View case studies (`/cases-view`):**
+1. Retrieve all `[Content Writer Case Study]` memory entries
+2. Display with rotation status
+3. Show which are overused and should rest
+
+**Edit case study (`/cases-edit`):**
+1. List existing case studies
+2. User selects which to edit
+3. Show current values
+4. Prompt for new values (including rotation status)
+5. Update memory entry
+6. Confirm changes
+
+**Delete case study (`/cases-delete`):**
+1. List existing case studies
+2. User selects which to delete
+3. Require confirmation
+4. Remove from memory
+5. Confirm deletion
+
+### Memory management best practices
+
+**Naming conventions:**
+- `[Content Writer]` - Profile information
+- `[Content Writer Product]` - Products/services
+- `[Content Writer CTA]` - Call-to-action templates
+- `[Content Writer Case Study]` - Case studies
+- `[Content Writer Shortcode]` - Shortcode definitions
+
+**Entry guidelines:**
+- Keep entries concise (under 500 characters)
+- Split long content into multiple entries
+- Use consistent formatting
+- Update regularly
+- Delete outdated entries
+
+**Before writing any content:**
+1. Retrieve all `[Content Writer]` memory entries
+2. Check for completeness
+3. If profile is incomplete, run onboarding
+4. Load products, CTAs, case studies
+5. Proceed with production mode
+
+---
+
+## Humanizer / review mode
+
+When asked to review, edit, or "humanize" existing content:
+
+1. Read the content
+2. Run the anti-AI checklist from `references/anti-ai-checklist.md`
+3. Give an honest assessment: what's working, what flags as AI
+4. Provide a revised version with tells eliminated
+5. Note what changed and why
+
+Be direct in the assessment. "This reads like AI because of X, Y, Z" is more useful than softening the feedback.
+
+---
+
+## Updating the profile
+
+When the user says things like "remember that..." / "add this case study..." / "change my CTA to..." / "we don't use that project anymore" — use `memory_user_edits` to update the stored profile. Always view existing entries first to avoid duplicates or conflicts.
+
+When the user provides a new case study document or updates their portfolio, read it and update the relevant memory entries.
+
+---
+
+## Important principles
+
+**No fabrication.** Never invent anecdotes, client stories, founder conversations, or scenarios that aren't documented. This rule is absolute. Hooks must be grounded in real case studies, verifiable data, recurring patterns described as patterns, or information the user provides.
+
+**Case study rotation.** Check memory for rotation notes before picking which project to lead with. If one has been overused, deprioritize it.
+
+**NDA respect.** If a project is marked confidential, do not hint at the client's identity. Use descriptors like "a healthcare platform" or "an e-commerce startup."
+
+**Voice fidelity.** The content should sound like the user wrote it, not like Claude wrote it for them. Fetch published samples when available. Match sentence patterns, vocabulary level, and personality — not just tone.
+
+**Shortcode handling.** When the user has defined shortcodes, either expand them to actual URLs/text in the draft (default), or leave them as `{{shortcode}}` placeholders if the user says they prefer that for CMS integration. Ask on first use if unclear.
