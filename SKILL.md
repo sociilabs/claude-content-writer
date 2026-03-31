@@ -19,6 +19,39 @@ Professional content generation system that produces blog articles, social media
 
 ---
 
+## Update Check System
+
+**IMPORTANT:** Before processing any user command, check for updates:
+
+1. Read `~/.claude/skills/content-writer/.version` to get installed version
+2. Check npm registry: `npm view claude-content-writer version`
+3. Compare versions
+4. If update available and not shown this session:
+   - Display update notification
+   - Mark as shown for this session (store in memory: `updateNotificationShown = true`)
+5. Continue with user's command
+
+**Update Notification Format:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📦 Content Writer Update Available
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Current: v{current_version}
+  Latest:  v{latest_version}
+
+  Run /writer:update to upgrade and see what's new.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Session Tracking:**
+- Only show notification once per Claude Code session
+- Reset when Claude Code restarts
+- Skip check if already shown in current session
+
+---
+
 ## System Overview
 
 Content Writer v2.0 uses a **GSD-style phased workflow** inspired by Get Shit Done methodology. Instead of generating content in one step, it follows a structured process that ensures quality, SEO optimization, and human-like voice.
@@ -84,6 +117,9 @@ Show available commands and current workflow status.
 
 **`/writer:status`**
 Show current phase, profile status, and next steps.
+
+**`/writer:update`**
+Check for updates and upgrade to the latest version. Shows changelog preview before updating.
 
 ---
 
@@ -1465,6 +1501,77 @@ These files are loaded automatically when needed during content generation.
 5. **Follow platform conventions** — Each platform has unique requirements
 6. **Integrate SEO naturally** — Don't stuff keywords
 7. **Save incrementally** — Don't lose work
+
+---
+
+## Update Command Workflow
+
+When user runs `/writer:update`:
+
+**Step 1: Check Version**
+```bash
+# Get installed version
+cat ~/.claude/skills/content-writer/.version
+
+# Get latest npm version
+npm view claude-content-writer version
+```
+
+**Step 2: Compare & Display**
+
+If update available:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Content Writer Update Available
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Current: v{current_version}
+  Latest:  v{latest_version}
+
+  Changelog Preview:
+  
+  {show relevant changelog entries}
+
+  Update now? (y/n)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+If already latest:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ Content Writer is Up to Date
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Current version: v{current_version}
+  Latest version:  v{current_version}
+
+  You're running the latest version!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Step 3: Execute Update**
+
+If user confirms:
+```bash
+npm install -g claude-content-writer@latest
+```
+
+**Step 4: Confirm Success**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ Content Writer Updated Successfully!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Updated: v{old_version} → v{new_version}
+
+  What's New:
+  {show changelog entries}
+
+  Full changelog: ~/.claude/skills/content-writer/CHANGELOG.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ---
 

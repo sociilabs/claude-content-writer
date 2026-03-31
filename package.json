@@ -1,6 +1,6 @@
 {
   "name": "claude-content-writer",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Professional content generation system with GSD-style phased workflow, integrated SEO optimization (claude-seo), and anti-AI auditing (humanizer). Features URL-based profile creation with automatic tone detection and comprehensive brand questionnaire. Generates blog articles, social media posts (LinkedIn, Facebook, Twitter, Instagram), email content (newsletters, campaigns, sequences), web content (landing pages, product pages, web pages), sales content (sales funnels, case studies, testimonials, product descriptions), and SEO metadata using best-in-class copywriting frameworks (AIDA, PAS, BAB, LEMA, CONVERT). All content sounds human — not AI-generated.",
   "repository": {
     "type": "git",

@@ -6,7 +6,29 @@ All notable changes to the Content Writer skill will be documented in this file.
 
 ## [Unreleased]
 
+---
+
+## [2.0.1] - 2026-04-01
+
 ### Added
+
+**Auto-Update Notification System**
+- Automatic version checking on skill load
+- Update notifications shown once per session
+- `/writer:update` command for manual updates
+- Changelog preview before updating
+- Session-based notification tracking
+
+### Changed
+
+- Enhanced SKILL.md with update check workflow
+- Added detailed update command documentation
+
+---
+
+## [Unreleased - Future]
+
+### Planned
 
 **New Content Types**
 - Email campaigns - Promotional, time-sensitive offers (200-500 words)

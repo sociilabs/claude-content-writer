@@ -6,7 +6,7 @@ const os = require('os');
 const { execSync } = require('child_process');
 
 const SKILL_NAME = 'content-writer';
-const VERSION = '2.0.0';
+const VERSION = '2.0.1';
 const pkgDir = path.join(__dirname, '..');
 const targetDir = path.join(os.homedir(), '.claude', 'skills', SKILL_NAME);
 const refsDir = path.join(targetDir, 'references');
